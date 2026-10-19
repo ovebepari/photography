@@ -2,7 +2,7 @@
 # The title of the website.
 title: "Photography | Ove Bepari"
 # The description of the website
-description: "some sample photos from my photo archive"
+description: "A slow collection of things I noticed."
 # Keywords/tags for you site.
 keywords: "photography"
 # Your copyright message.
@@ -14,7 +14,7 @@ header: ""
 # 2nd heading/sub heading of the website.
 subheader: "Photography - Ove Bepari"
 # A description/bio of the website.
-bio: "Some sample photos from my photo archive, see instagram broader and updated photos"
+bio: "A slow collection of things I noticed."
 social:
   # Your Twitter username.
   twitter_username: "ovebepari"
