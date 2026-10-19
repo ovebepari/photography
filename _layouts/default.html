@@ -1,17 +1,240 @@
 <!DOCTYPE html>
-<!--
-
-    @author Sankarsan Kampa (https://sankarsankampa.com)
-    A Jekyll theme by Elastic Designs (https://git.io/elastic).
-
--->
 <html lang="en">
 <head>
-  {% include head.html %}
-</head>
-<body class="is-loading-0 is-loading-1 is-loading-2">
-  {{ content }}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ site.title }}</title>
+  <meta name="description" content="{{ site.description }}">
+  <link rel="icon" href="/favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --background: #FFFFFF;
+      --foreground: #1A1A1A;
+      --muted: #888888;
+      --hairline: #E0E0E0;
+      --accent: #FFCF22;
+      --surface-inset: #F5F5F5;
+    }
 
-  {% include scripts.html %}
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--background);
+      color: var(--foreground);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── Header ─── */
+    .photo-header {
+      padding: 48px 24px 40px;
+      text-align: center;
+      border-bottom: 0.5px solid var(--hairline);
+    }
+
+    .photo-header h1 {
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      margin-bottom: 6px;
+    }
+
+    .photo-header h1 a {
+      color: var(--foreground);
+      text-decoration: none;
+    }
+
+    .photo-header p {
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+    }
+
+    .photo-header nav {
+      margin-top: 16px;
+      display: flex;
+      justify-content: center;
+      gap: 0;
+    }
+
+    .photo-header nav a {
+      font-size: 0.65rem;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 6px 14px;
+      border: 0.5px solid var(--hairline);
+      border-left: none;
+      transition: background-color 0.15s;
+    }
+
+    .photo-header nav a:first-child {
+      border-left: 0.5px solid var(--hairline);
+    }
+
+    .photo-header nav a:hover {
+      background-color: rgba(255, 207, 34, 0.15);
+    }
+
+    /* ─── Gallery Grid ─── */
+    .gallery {
+      padding: 32px 24px 80px;
+      max-width: 1100px;
+      margin: 0 auto;
+      columns: 3;
+      column-gap: 16px;
+    }
+
+    .gallery-item {
+      break-inside: avoid;
+      margin-bottom: 16px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      display: block;
+      border: 0.5px solid var(--hairline);
+      transition: opacity 0.3s;
+    }
+
+    .gallery-item:hover img {
+      opacity: 0.85;
+    }
+
+    .gallery-caption {
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+      padding: 8px 0 4px;
+    }
+
+    /* ─── Lightbox ─── */
+    .lightbox {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.92);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .lightbox.open {
+      display: flex;
+    }
+
+    .lightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 24px;
+      right: 28px;
+      font-size: 1.4rem;
+      color: rgba(255,255,255,0.6);
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: inherit;
+      font-weight: 200;
+    }
+
+    .lightbox-caption {
+      position: absolute;
+      bottom: 24px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.05em;
+    }
+
+    /* ─── Footer ─── */
+    .photo-footer {
+      border-top: 0.5px solid var(--hairline);
+      padding: 24px;
+      text-align: center;
+      font-size: 0.65rem;
+      color: var(--muted);
+    }
+
+    .photo-footer a {
+      color: var(--foreground);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .photo-footer a:hover {
+      color: #B8930F;
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 768px) {
+      .gallery { columns: 2; }
+    }
+
+    @media (max-width: 480px) {
+      .gallery { columns: 1; padding: 16px; }
+      .photo-header { padding: 32px 16px 28px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="photo-header">
+    <h1><a href="https://ovebepari.github.io">{{ site.subheader }}</a></h1>
+    <p>{{ site.bio }}</p>
+    <nav>
+      <a href="https://ovebepari.github.io">Blog</a>
+      <a href="https://ovebepari.github.io/about/">About</a>
+      <a href="https://ovebepari.github.io/essays/">Essays</a>
+      <a href="https://ovebepari.github.io/audio_archive/">Audio</a>
+    </nav>
+  </header>
+
+  <div class="gallery">
+    {% assign gallery = site.static_files | where: "image", true %}
+    {% for image in gallery %}
+      <div class="gallery-item" onclick="openLightbox('https://raw.githubusercontent.com/ovebepari/photography/master/gallery/{{ image.name }}', '{{ image.basename | replace: "_", " " }}')">
+        <img src="https://raw.githubusercontent.com/ovebepari/photography/master/gallery/{{ image.name }}" alt="{{ image.basename | replace: '_', ' ' }}" loading="lazy">
+        <div class="gallery-caption">{{ image.basename | replace: "_", " " }}</div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+    <img id="lightbox-img" src="" alt="">
+    <div class="lightbox-caption" id="lightbox-caption"></div>
+  </div>
+
+  <footer class="photo-footer">
+    &copy; {{ site.time | date: '%Y' }} <a href="https://ovebepari.github.io">ovebepari</a>
+  </footer>
+
+  <script>
+    function openLightbox(src, caption) {
+      document.getElementById('lightbox-img').src = src;
+      document.getElementById('lightbox-caption').textContent = caption;
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeLightbox();
+    });
+  </script>
+
 </body>
 </html>
